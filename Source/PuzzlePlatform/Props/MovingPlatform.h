@@ -29,7 +29,17 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "Move Option")
 	float MoveSpeed;
 
+	// Number Of Trigger 수 이상의 트리거가 활성화되면, 이 플랫폼을 움직인다.
+	void AddActivatedTrigger();
+	void RemoveActivatedTrigger();
+
 private:
+	// 이 플랫폼을 움직이기 위해 활성화 시켜야 하는 트리거의 수
+	UPROPERTY(EditAnywhere)
+	int NumberOfTrigger;
+
+	int ActivatedTrigger;
+
 	FVector GlobalStartLocation;
 	FVector GlobalTargetLocation;
 };

@@ -8,6 +8,8 @@ AMovingPlatform::AMovingPlatform()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	SetMobility(EComponentMobility::Movable);
+
+	ActivatedTrigger = 0;
 }
 
 void AMovingPlatform::BeginPlay()
@@ -36,7 +38,7 @@ void AMovingPlatform::Tick(float DeltaSeconds)
 	// 서버라면 HasAuthority 는 True 를 반환하고, 클라이언트라면 False 를 반환한다.
 	// 즉 아래와 같은 코드는 서버에서만 작동하도록 하는 코드가 된다.
 	// 즉, 이 플랫폼은 클라이언트에서는 실제로 움직이지 않고, 서버에서만 움직이게 되는 것이다!!
-	if (HasAuthority())
+	if (HasAuthority() && ActivatedTrigger >= NumberOfTrigger)
 	{
 		FVector CurrentLocation = GetActorLocation();
 
@@ -80,4 +82,14 @@ void AMovingPlatform::Tick(float DeltaSeconds)
 			GlobalStartLocation = TempLocation;
 		}
 	}
+}
+
+void AMovingPlatform::AddActivatedTrigger()
+{
+	ActivatedTrigger++;
+}
+
+void AMovingPlatform::RemoveActivatedTrigger()
+{
+	ActivatedTrigger--;
 }
